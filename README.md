@@ -13,6 +13,7 @@ Assorted tutorials for working with annoying `python3` packages in both Windows 
 9. [Address Regex/Cleaning/Dedupe](#addy)
 10. [Automated Emails](#email)
 11. [Automating Jupyter Notebooks](#papermill)
+12. [Life Saving Regex for data cleansing](#regex)
 
 
 ## PyODBC/SQLAlchemy for WSL <a name="pyodbc"></a>
@@ -298,3 +299,19 @@ if __name__ == "__main__":
         run(nb)
     print("Completed.")
 ```
+
+## Life Saving Regex for Data Cleansing <a name="regex"></a>
+The "reg" in regex is prounounced like "regular", not "registry" -> `reg(ular)ex(pression)`.
+- https://regexlib.com/?AspxAutoDetectCookieSupport=1
+
+Best ones of note:
+- Emails:
+    - `"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"`
+- Names:
+    - `"^[a-zA-Z]+(([\'\,\.\- ][a-zA-Z ])?[a-zA-Z]*)*$"`
+- Australian Phone Numbers:
+    - `"(^1300\d{6}$)|(^1800|1900|1902\d{6}$)|(^0[2|3|7|8]{1}[0-9]{8}$)|(^13\d{4}$)|(^04\d{2,3}\d{6}$)"`
+- Websites:
+    - `"^((http|https|ftp):\/\/(www\.)?|www\.)[a-zA-Z0-9\_\-]+\.([a-zA-Z]{2,4}|[a-zA-Z]{2}\.[a-zA-Z]{2})(\/[a-zA-Z0-9\-\._\?\&=,'\+%\$#~]*)*$"`
+- Alphanumeric:
+    - `"[a-zA-Z0-9]+"`
