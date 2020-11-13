@@ -61,7 +61,7 @@ How to manually save packages and install them in an offline environment
 2. You will need 2 different .whl (wheel) files. These are `GDAL` and `Fiona`.
 3. Find both of them and download the version corresponding to your device OS and Python. For example, a 64-bit Windows 10 device running `Python 3.7.X` will require this specific file for GDAL. Repeat this for Fiona as well. 
 
-    ![Alt text](./figures/GDAL.png)
+    ![Alt text](https://github.com/akiratwang/Tutorials/blob/main/figures/gdal.png)
     - `cp37` stands for `C-Python3.7.X`
     - `win_amd64` denotes windows devices for a 64-bit architecture 
 
