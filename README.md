@@ -8,7 +8,7 @@ Assorted tutorials for working with annoying `python3` packages in both Windows 
 4. [Installing WSL without Windows Store](#wsl_install)
 5. [Installing multiple instances of SQL server onto a single server/VM/RDP](#mutli_sql)
 6. [Download Files with Python](#dl_dataset)
-7. [Using command line `git` on a VM](#git)
+7. [Using command line git on a VM](#git)
 8. [SalesForce API](#sf)
 9. [Address Regex/Cleaning/Dedupe](#addy)
 
@@ -135,7 +135,7 @@ urllib.request.urlretrieve(url, fname)
 ```
 
 
-## Using command line `git` on a VM <a name="#git"></a>
+## Using command line git on a VM <a name="#git"></a>
 Basics of cloning/pushing using commandline git
 
 Cloning:
