@@ -114,7 +114,7 @@ Parameter Set:
 1. From the features checkbox, check _Database Engine Services_ and other services where required. You can also change the location of the root instance here.
 2. From the Server Configuration Step:
     - Add a suitable engine nad password
-    - Tick the _Grant Preform Volume Maintenance Task privilage to SQL Server Database Engine Service*
+    - Tick the _Grant Preform Volume Maintenance Task privilage to SQL Server Database Engine Service_
 3. From the Database Engine Configuration Step:
     - Server Configuration -> Tick _Mixed Mode_ and enter the default sysadmin password
     - Server Configuration -> Specify the user(s) who will be the admins of this SQL server
