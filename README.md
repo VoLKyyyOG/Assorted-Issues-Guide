@@ -11,6 +11,8 @@ Assorted tutorials for working with annoying `python3` packages in both Windows 
 7. [Using command line git on a VM](#git)
 8. [SalesForce API](#sf)
 9. [Address Regex/Cleaning/Dedupe](#addy)
+10. [Automated Emails](#email)
+11. [Automating Jupyter Notebooks](#papermill)
 
 
 ## PyODBC/SQLAlchemy for WSL <a name="pyodbc"></a>
@@ -187,8 +189,112 @@ results.to_sql(TABLE_NAME, engine, index=False, schema='dbo', chunksize=int(3e5)
 ```
 
 ## Address Regex/Cleaning/Dedupe <a name="addy"></a>
-Nice packages for address stuff:
+Nice packages for address stuff on top of regex:
 - https://github.com/jasonrig/https://github.com/jasonrig/address-net
 - https://data.gov.au/dataset/ds-dga-19432f89-dc3a-4ef3-b943-5326ef1dbecc/details
 - https://github.com/seatgeek/fuzzywuzzy
 - https://github.com/ethanzhao6/au-addr-parser
+
+## Automated Emails <a name="email"></a>
+How to easily send emails. First, set up environment password
+```python
+import os
+
+os.environ['EMAIL_USER'] = 'example@example.com' # email address
+os.environ['EMAIL_PASSWORD'] = 'test' # password
+```
+Usage (you might have enable developer access on gmail or whatever smtp server first):
+```python
+import smtplib, os
+from email.message import EmailMessage
+
+smtp_server = "smpt.gmail.com:587" # server smtp
+from_email, password = os.getenv('EMAIL_USER'), os.environ.get('EMAIL_PASSWORD')
+
+def setup(from_email, pw, smtp):
+    server = smtplib.SMTP(smtp)
+    server.ehlo()
+    server.starttls()
+    server.login(from_email, pw)
+    server.ehlo()
+    return server
+
+server = setup(from_email, password, smtp_server)
+
+# lets say youve got a df with a column for a persons name and their email
+for name, to_email in df.values:
+    email_msg = EmailMessage()
+    email_msg['X-Priority'] = '2' # priorty of email, 2 is important
+    email_msg['FROM'] = 'Automated Email Bot' # sender name
+    email_msg['Subject'] = 'Automated Email' # subject field
+    email_msg['To'] = to_email # send to email 'someone@gmail.com'
+
+    # html formatted email body
+    msg = f"""
+    <p>Hi {name},</p>
+    <p> here's some random text you can write in html <p>
+    """
+    EMAIL.add_alternative(msg, subtype='html')
+
+    server.send_message(email_msg, from_addr=from_email)
+
+server.quit()
+```
+
+## Automating Jupyter Notebooks <a name="papermill"></a>
+How to automate jupyter notebooks. Better altneratives include `luigi` and `apache airflow`, but those are not as easy to get working.
+```bash
+pip3 install papermill
+```
+Usage:
+1. Create notebook(s) for your pipeline
+2. Go to View -> Cell Toolbar and enable _Tags_
+3. Create a cell with `parameters` as the Tag
+4. Add your parameters here
+```python
+import papermill as pm
+from datetime import datetime
+import os
+
+PIPELINE_NOTEBOOKS = [
+    'notebook1.ipynb',
+    'notebook2.ipynb',
+    ...
+    'notebookN.ipynb'
+]
+
+def run(nb):
+    timestamp = str(datetime.now().date)
+    nb_dir = os.getcwd().replace('\\', '/')
+    pm_dir = "./" +  timestamp # directory of papermill output notebooks
+
+    params = {
+        'variable1': 'value1',
+        'variable2': 'value2',
+        ...
+        'variableN': 'valueN'
+    }
+    
+    if not os.path.exists(pm_dir):
+        os.mkdir(pm_dir)
+    
+    print(f"""
+    Notebook: {nb_dir}/{nb} 
+    will be executed to: {pm_dir}/{nb}
+    """)
+
+    pm.execute_notebook(input_path=f"{nb_dir}/{nb}",
+                        output_path=f"{pm_dir}/{nb}",
+                        parameters=params,
+                        progress_bar=True
+    )
+
+if __name__ == "__main__":
+    nb_dir = "./notebooks/pipeline" # notebook dir
+    os.chdir(nb_dir)
+    
+    print("Running pipeline")
+    for nb in PIPELINE_NOTEBOOKS:
+        run(nb)
+    print("Completed.")
+```
