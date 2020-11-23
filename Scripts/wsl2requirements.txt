@@ -1,0 +1,15 @@
+notebook
+pandas
+numpy
+geopandas
+matplotlib
+seaborn
+sklearn
+scipy
+statsmodels
+folium
+bokeh
+papermill
+nbgrader
+jupyter_contrib_nbextensions
+tensorflow

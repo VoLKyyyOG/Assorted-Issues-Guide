@@ -5,7 +5,7 @@ Assorted tutorials for working with annoying `python3` packages in both Windows 
 1. [PyODBC/SQLAlchemy for WSL](#pyodbc)
 2. [Offline package installations](#offline)
 3. [Geopandas for Windows 10](#geopandas)
-4. [Installing WSL without Windows Store](#wsl_install)
+4. [Installing WSL2 (20.04) without Windows Store](#wsl_install)
 5. [Installing multiple instances of SQL server onto a single server/VM/RDP](#mutli_sql)
 6. [Download Files with Python](#dl_dataset)
 7. [Using command line git on a VM](#git)
@@ -14,6 +14,7 @@ Assorted tutorials for working with annoying `python3` packages in both Windows 
 10. [Automated Emails](#email)
 11. [Automating Jupyter Notebooks](#papermill)
 12. [Life Saving Regex for data cleansing](#regex)
+13. [HTCondor and PostgreSQL](#htcondor)
 
 
 ## PyODBC/SQLAlchemy for WSL <a name="pyodbc"></a>
@@ -24,7 +25,7 @@ curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 exit
 sudo apt-get update && sudo apt-get upgrade
 sudo ACCEPT_EULA=Y apt-get install msodbcsql17
-sudo apt-get install build-essential libssl-dev libffi-dev python3-dev unixodbc unixodbc-dev 
+sudo apt-get install build-essential libssl-dev libffi-dev python3-dev unixodbc unixodbc-dev
 pip3 install sqlalchemy pyodbc
 ```
 Usage:
@@ -78,27 +79,41 @@ How to manually save packages and install them in an offline environment
 7. Done!
 
 
-## Installing WSL without Windows Store <a name="wsl_install"></a>
-How to install WSL if you have debloated Windows 10 and got rid of the pesky Windows Store
-1. Create a powershell script (`.ps1`) with the following code:
+## Installing WSL2 (20.04) without Windows Store <a name="wsl_install"></a>
+How to install WSL2 if you have debloated Windows 10 and got rid of the pesky Windows Store.
+
+1. Download the new kernel update here (https://docs.microsoft.com/en-us/windows/wsl/wsl2-kernel). 
+    - Direct link is (https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi)
+    - If you have a previous installation, you will need to unregister it. If I previously had Ubuntu 18.04, then:
+    ```bash
+    wsl --list --all
+    wsl --unregister Ubuntu-18.04 
+    ```
+2. Create a powershell script (`.ps1`) with the following code:
 ```powershell
+# this is for wsl2
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -NoRestart
 
 cd c:\
 
-Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu-1804 -OutFile Ubuntu.appx -UseBasicParsing
+# install 2004 (different url)
+# 1804 is https://aka.ms/wsl-ubuntu-1804
+Invoke-WebRequest -Uri https://aka.ms/wslubuntu2004 -OutFile Ubuntu.appx -UseBasicParsing
 
 Rename-Item ./Ubuntu.appx ./Ubuntu.zip
 Expand-Archive ./Ubuntu.zip ./Ubuntu
 
 cd ./Ubuntu
 
-.\ubuntu1804.exe
+.\ubuntu2004.exe
 
 $userenv = [System.Environment]::GetEnvironmentVariable("Path", "User")
 [System.Environment]::SetEnvironmentVariable("PATH", $userenv + ";C:\Ubuntu", "User")
 ```
-2. Run as admin and you are done!
+3. Run as admin and you are done!
 
 
 ## Installing multiple instances of SQL server onto a single Server/VM/RDP <a name="mutli_sql"></a>
@@ -138,7 +153,7 @@ urllib.request.urlretrieve(url, fname)
 ```
 
 
-## Using command line git on a VM <a name="#git"></a>
+## Using command line git on a VM <a name="git"></a>
 Basics of cloning/pushing using commandline git
 
 Cloning:
@@ -315,3 +330,21 @@ Best ones of note:
     - `"^((http|https|ftp):\/\/(www\.)?|www\.)[a-zA-Z0-9\_\-]+\.([a-zA-Z]{2,4}|[a-zA-Z]{2}\.[a-zA-Z]{2})(\/[a-zA-Z0-9\-\._\?\&=,'\+%\$#~]*)*$"`
 - Alphanumeric:
     - `"[a-zA-Z0-9]+"`
+
+## HTCondor and PostgreSQL <a name="htcondor"></a>
+Docs: https://htcondor.readthedocs.io/en/latest/apis/python-bindings/tutorials/index.html  
+Installation:
+```bash
+pip3 install htcondor classad
+python3 -m pip install psycopg2-binary
+touch condor_config
+export CONDOR_CONFIG=`pwd`/condor_config
+```
+
+Python3 for `htcondor`:
+- https://research.cs.wisc.edu/htcondor/HTCondorWeek2014/presentations/TheisenT-Python.pdf
+- https://htcondor.readthedocs.io/en/latest/users-manual/index.html
+- https://research.cs.wisc.edu/htcondor/manual/v8.1/6_7Python_Bindings.html
+
+PostgreSQL with `SQLAlchemy`:
+- https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2
