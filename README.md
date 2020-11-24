@@ -361,7 +361,8 @@ Some options:
 Once you have the url it's simply a matter of parsing it, where you can then work with.
 The below function parses an ajax requested data into a dictionary, which can then be interrogated and worked with. 
 ```python
-
+import requests
+import json
 def get_json_data_from_url(url):
     # set headers for get request (prevents 403 error)
     headers = {'User-Agent':'Mozilla/5.0'}
