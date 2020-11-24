@@ -15,6 +15,7 @@ Assorted tutorials for working with annoying `python3` packages in both Windows 
 11. [Automating Jupyter Notebooks](#papermill)
 12. [Life Saving Regex for data cleansing](#regex)
 13. [HTCondor and PostgreSQL](#htcondor)
+14. [Webscraping dynamically loaded sites](#webscrape)
 
 
 ## PyODBC/SQLAlchemy for WSL <a name="pyodbc"></a>
