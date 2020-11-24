@@ -356,6 +356,31 @@ This is because the data is loaded dynamically using JS.
 
 Some options:
 1) Use `selenium`. This requires you have a web driver attached to a path you can run. [Chromedriver](https://chromedriver.chromium.org/downloads) is pretty good, it's what I've used.
+
+Selenium essentially acts as a way to interact with a website through Python. You can click on elements, copy, paste etc. 
+
+Here is a simple example using weather data from New York City:
+```python
+from selenium import webdriver
+d = webdriver.Chrome("<path_to_driver>\chromedriver")
+d.get('https://www.timeanddate.com/weather/usa/new-york/historic?month=1&year=2019')
+
+w = {}
+# This gets all values in a drop down menu
+for i in d.find_element_by_id('wt-his-select').find_elements_by_tag_name('option'):
+        i.click()
+        print(i.text)
+        # will print 1 January 2019, 2 January 2019 etc...
+        
+        # added sleep time as the webpage itself is really shit and if it updates too fast elements are not loaded correctly
+        time.sleep(3)
+        
+        # add weather
+        with get_weather_data(d.page_source, False) as weather:
+            w[i.text] = weather
+```
+*Quick tip:* Depending on your system speed, you'll loop through faster than you'll be able to harvest data if you save. I recommend adding around a 2-3 second sleep each iteration in order to allow time for all the data in the website to fully load.
+
 2) Load the data directly from the ajax request the page makes. [This thread pretty much explains how to grab the data you want using Chrome.](https://stackoverflow.com/questions/52010016/web-scraping-extract-javascript-table-seleniumpython)
 
 Once you have the url it's simply a matter of parsing it, where you can then work with.
