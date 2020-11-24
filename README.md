@@ -348,3 +348,26 @@ Python3 for `htcondor`:
 
 PostgreSQL with `SQLAlchemy`:
 - https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2
+
+## Webscraping (epic way) <a name="webscrape"></a>
+Sometimes you'll find a website that has data you want to scrape, but when you simply load the html there's no table data.
+This is because the data is loaded dynamically using JS. 
+
+Some options:
+1) Use `selenium`. This requires you have a web driver attached to a path you can run. [Chromedriver](https://chromedriver.chromium.org/downloads) is pretty good, it's what I've used.
+2) Load the data directly from the ajax request the page makes. [This thread pretty much explains how to grab the data you want using Chrome.](https://stackoverflow.com/questions/52010016/web-scraping-extract-javascript-table-seleniumpython)
+
+Once you have the url it's simply a matter of parsing it, where you can then work with.
+The below function parses an ajax requested data into a dictionary, which can then be interrogated and worked with. 
+```python
+
+def get_json_data_from_url(url):
+    # set headers for get request (prevents 403 error)
+    headers = {'User-Agent':'Mozilla/5.0'}
+    
+    # send get request and parse response as json.
+    text = requests.get(url, headers).text
+    data = json.loads(text)
+    
+    return data
+```
