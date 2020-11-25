@@ -368,16 +368,16 @@ d.get('https://www.timeanddate.com/weather/usa/new-york/historic?month=1&year=20
 w = {}
 # This gets all values in a drop down menu
 for i in d.find_element_by_id('wt-his-select').find_elements_by_tag_name('option'):
-        i.click()
-        print(i.text)
-        # will print 1 January 2019, 2 January 2019 etc...
+    i.click()
+    print(i.text)
+    # will print 1 January 2019, 2 January 2019 etc...
         
-        # added sleep time as the webpage itself is really shit and if it updates too fast elements are not loaded correctly
-        time.sleep(3)
+    # added sleep time as the webpage itself is really shit and if it updates too fast elements are not loaded correctly
+    time.sleep(3)
         
-        # add weather
-        with get_weather_data(d.page_source, False) as weather:
-            w[i.text] = weather
+    # add weather
+    with get_weather_data(d.page_source, False) as weather:
+    w[i.text] = weather
 ```
 *Quick tip:* Depending on your system speed, you'll loop through faster than you'll be able to harvest data if you save. I recommend adding around a 2-3 second sleep each iteration in order to allow time for all the data in the website to fully load.
 
