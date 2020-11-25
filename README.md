@@ -350,7 +350,7 @@ Python3 for `htcondor`:
 PostgreSQL with `SQLAlchemy`:
 - https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2
 
-## Webscraping (epic way) <a name="webscrape"></a>
+## Webscraping dynamically loaded sites <a name="webscrape"></a>
 Sometimes you'll find a website that has data you want to scrape, but when you simply load the html there's no table data.
 This is because the data is loaded dynamically using JS. 
 
