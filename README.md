@@ -16,6 +16,7 @@ Assorted tutorials for working with annoying `python3` packages in both Windows 
 12. [Life Saving Regex for data cleansing](#regex)
 13. [HTCondor and PostgreSQL](#htcondor)
 14. [Webscraping dynamically loaded sites](#webscrape)
+15. [Install nbgrader](#nbgrader)
 
 
 ## PyODBC/SQLAlchemy for WSL <a name="pyodbc"></a>
@@ -398,3 +399,14 @@ def get_json_data_from_url(url):
     
     return data
 ```
+
+## Install nbgrader <a name="nbgrader"></a>
+Normal:
+```pip3
+pip3 install jupyter_contrib_nbextensions nbgrader
+jupyter nbextension install --sys-prefix --py nbgrader --overwrite
+jupyter nbextension enable --sys-prefix --py nbgrader
+jupyter serverextension enable --sys-prefix --py nbgrader
+```
+
+If `PermissionDenied` occurs, replace `--sys-prefix` with `--user`
