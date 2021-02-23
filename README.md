@@ -40,6 +40,7 @@ username = r"user"
 password = r"pw"
 dsnname = r"DB_NAME" # the pyodbc connection name
 
+# mysql would be f"mysql+pyodbc://{username}:{password}@{dsnname}" and remove fast_executemany=True
 connection_string = f"mssql+pyodbc://{username}:{password}@{dsnname}"
 engine = sqlalchemy.create_engine(connection_string, pool_pre_ping = True, fast_executemany=True)
 
