@@ -17,6 +17,7 @@ Assorted tutorials for working with annoying `python3` packages in both Windows 
 13. [HTCondor and PostgreSQL](#htcondor)
 14. [Webscraping dynamically loaded sites](#webscrape)
 15. [Install nbgrader](#nbgrader)
+16. [Launching Jupyter Notebook in WSL2](#brave)
 
 
 ## PyODBC/SQLAlchemy for WSL <a name="pyodbc"></a>
@@ -411,3 +412,12 @@ jupyter serverextension enable --sys-prefix --py nbgrader
 ```
 
 If `PermissionDenied` occurs, replace `--sys-prefix` with `--user`
+
+## Launching Jupyter Notebook in WSL2 <a name="brave"></a>
+1. Generate a config using `jupyter notebook --generate-config`
+2. Open config `jupyter_notebook_config.py` using `code` or another editor of your choice.
+3. Brave Browser:
+`
+c.NotebookApp.browser = u'/mnt/c/Program\ Files/BraveSoftware/Brave-Browser/Application/brave.exe %s'
+c.NotebookApp.use_redirect_file = False
+`
