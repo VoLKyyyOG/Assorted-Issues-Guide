@@ -1,5 +1,5 @@
 # General Tech Tutorials
-Assorted tutorials for working with annoying `python3` packages in both Windows 10 and WSL (Ubuntu 18.04).
+Assorted tutorials for working with annoying `python3` packages in both Windows 10 and WSL2 (Ubuntu 20.04).
 
 # Table of contents
 1. [PyODBC/SQLAlchemy for WSL](#pyodbc)
@@ -17,7 +17,8 @@ Assorted tutorials for working with annoying `python3` packages in both Windows 
 13. [HTCondor and PostgreSQL](#htcondor)
 14. [Webscraping dynamically loaded sites](#webscrape)
 15. [Install nbgrader](#nbgrader)
-16. [Launching Jupyter Notebook in WSL2](#brave)
+16. [Automatically Launching Jupyter Notebook in WSL2](#brave)
+17. [Installing PySpark using Docker](#pyspark)
 
 
 ## PyODBC/SQLAlchemy for WSL <a name="pyodbc"></a>
@@ -413,7 +414,7 @@ jupyter serverextension enable --sys-prefix --py nbgrader
 
 If `PermissionDenied` occurs, replace `--sys-prefix` with `--user`
 
-## Launching Jupyter Notebook in WSL2 <a name="brave"></a>
+## Automatically Launching Jupyter Notebook in WSL2 <a name="brave"></a>
 1. Generate a config using `jupyter notebook --generate-config`
 2. Open config `jupyter_notebook_config.py` using `code` or another editor of your choice.
 3. Brave Browser:
@@ -421,3 +422,15 @@ If `PermissionDenied` occurs, replace `--sys-prefix` with `--user`
 c.NotebookApp.browser = u'/mnt/c/Program\ Files/BraveSoftware/Brave-Browser/Application/brave.exe %s'
 c.NotebookApp.use_redirect_file = False
 `
+
+## Installing PySpark using Docker <a name="pyspark"></a>
+1. Download docker and install it.
+2. (Recommended) If you have WSL2 on a Windows 10 device, set this as your main backend instead of Windows.
+3. Grab the AWS Glue Package (https://hub.docker.com/r/amazon/aws-glue-libs) by running command: `docker pull amazon/aws-glue-libs:glue_libs_1.0.0_image_01` (tag = `glue_libs_1.0.0_image_01` as of March 2021) in terminal.
+4. Initialise and run the container: `docker run -itd -p 8888:8888 -p 4040:4040 -v ~/.aws:/root/.aws:ro --name glue_jupyter amazon/aws-glue-libs:glue_libs_1.0.0_image_01 /home/jupyter/jupyter_start.sh`
+5. Check that the container is up and running using: `docker ps` (you should see `glue_jupyter` running).
+6. Launch the notebook at `http://localhost:8888` and code away!
+
+Other info:
+- The container has most libraries and can be shutdown / restarted using the Docker UI (Windows 10).
+- Read more about Spark with "Learning Spark" from O'Reilly (Jules S. Damji, Brooke Wenig, Tathagata Das & Denny Lee)
