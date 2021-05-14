@@ -1,5 +1,7 @@
-# General Tech Tutorials
-Assorted tutorials for working with annoying `python3` packages in both Windows 10 and WSL2 (Ubuntu 20.04).
+# General Assorted Industry Tutorials
+- My assorted industry tutorials for working with annoying `python3` packages in Windows 10 or WSL2 (Ubuntu 20.04) environments.
+- Also has some "life saving" concepts when dealing with niche problems or libraries
+- Check the `Scripts` folder for some other stuff.
 
 # Table of contents
 1. [PyODBC/SQLAlchemy for WSL](#pyodbc)
@@ -211,7 +213,7 @@ results.to_sql(TABLE_NAME, engine, index=False, schema='dbo', chunksize=int(3e5)
 
 ## Address Regex/Cleaning/Dedupe <a name="addy"></a>
 Nice packages for address stuff on top of regex:
-- https://github.com/jasonrig/https://github.com/jasonrig/address-net
+- https://github.com/jasonrig/address-net
 - https://data.gov.au/dataset/ds-dga-19432f89-dc3a-4ef3-b943-5326ef1dbecc/details
 - https://github.com/seatgeek/fuzzywuzzy
 - https://github.com/ethanzhao6/au-addr-parser
