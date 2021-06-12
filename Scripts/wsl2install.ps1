@@ -22,3 +22,6 @@ cd ./Ubuntu
 
 $userenv = [System.Environment]::GetEnvironmentVariable("Path", "User")
 [System.Environment]::SetEnvironmentVariable("PATH", $userenv + ";C:\Ubuntu", "User")
+
+# set to wsl2
+wsl --set-version Ubuntu-20.04 2
